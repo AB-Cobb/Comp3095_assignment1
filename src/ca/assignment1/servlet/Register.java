@@ -27,6 +27,7 @@ public class Register extends HttpServlet {
 		String password = request.getParameter("password");
 		User user = new User(username, password);
 		user.save();
+		//TODO routing
 				
 	}
 

@@ -5,7 +5,7 @@ public class User {
 		this.name = name;
 		this.salt = Password.newRandomSalt();
 		this.passwordhash = Password.getHash(password, name);
-		this.type = "client";
+		this.role = "client";
 	}
 
 
@@ -13,13 +13,14 @@ public class User {
 	private String name;
 	private String passwordhash;
 	private String salt;
-	private String type;
+	private String role;
 	
 	
 	
 	public static User authenticate(String name, String Password) {
-		User user = DB.getUserByName(name);
-		if (user !=null) {
+		String [] user_data = DB.getUserByName(name);
+		if (user_data !=null) {
+			String user_name = user_data[0];
 			
 		}
 		return null;
@@ -48,7 +49,7 @@ public class User {
 
 
 
-	public String getType() {
-		return type;
+	public String getRole() {
+		return role;
 	}
 }
