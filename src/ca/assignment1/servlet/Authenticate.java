@@ -12,6 +12,11 @@ import ca.assignment1.classes.User;
 @WebServlet("/Authenticate")
 public class Authenticate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/*
+	 * reCaptcha keys
+	 * site:	6LdpNb0UAAAAAB8tqgKCVswqCtBuJhU_G0gst7OE
+	 * secret:	6LdpNb0UAAAAAB2heT3JXQUudCK6IfAbsc4aQYff
+	 */
 
     public Authenticate() {
         super();
@@ -21,21 +26,23 @@ public class Authenticate extends HttpServlet {
 
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
+		// TODO validate form
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		User user = User.authenticate(username,password);
+		User user = User.authenticate(email,password);
 		String url = "/dasnboard";
 		if (user == null) {
 			request.setAttribute("msg", "Invalid Username or Password");
 			url = "/login";
 		} 
 		else {
-			request.setAttribute("name", user.getName());
-			if (user.getType().equals("admin")) {
+			request.setAttribute("firstname", user.getFirstname());
+			request.setAttribute("lastname", user.getLastname());
+			if (user.getRole().equals("admin")) {
 				//do something
 			}
 				
-			if (user.getType().equals("client")) {
+			if (user.getRole().equals("client")) {
 				//do something else
 			}
 			

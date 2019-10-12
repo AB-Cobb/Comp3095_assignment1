@@ -23,8 +23,6 @@ public class Register extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO validate form
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
 		User user = new User(username, password);
 		user.save();
 		//TODO routing
