@@ -1,4 +1,4 @@
-package servlets;
+package ca.assignment1.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
