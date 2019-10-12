@@ -1,4 +1,4 @@
-package beans;
+package ca.assignment1.beans;
 
 import java.io.Serializable;
 
