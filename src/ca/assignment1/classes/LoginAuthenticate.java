@@ -1,4 +1,4 @@
-package classes;
+package ca.assignment1.classes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
