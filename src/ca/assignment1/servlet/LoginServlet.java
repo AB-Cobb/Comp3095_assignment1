@@ -1,6 +1,8 @@
 package ca.assignment1.servlet;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import classes.LoginAuthenticate;
-import beans.User;
+import ca.assignment1.classes.LoginAuthenticate;
+import ca.assignment1.classes.User;
+import ca.assignment1.classes.DB;
 
 /**
  * Servlet implementation class LoginServlet
@@ -38,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//int resultCode = LoginAuthenticate.Authenticate(request, response);
 		int resultCode = LoginAuthenticate.Authenticate(request, response);
 		if (resultCode == 0) {
 			request.setAttribute("Message", "Invalid credentials");
@@ -52,6 +56,8 @@ public class LoginServlet extends HttpServlet {
 		}
 		else {
 			User user;
+			//ResultSet data = DB.getUserByEmail(request.getAttribute("username").toString());
+			//user = User.authenticate(request.getParameter("username"), request.getParameter("password"));
 			if (resultCode == 2) {
 				user = new User(request.getParameter("username"), request.getParameter("password"), "client");
 			}
@@ -61,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("User", user);
 			request.setAttribute("User", user);
-			request.getRequestDispatcher("dashboard.jsp").forward(request, response);;
+			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 		}
 	}
 
