@@ -10,6 +10,19 @@ public abstract class LoginAuthenticate {
 		if (username.equals("") || username == null || password.equals("") || password == null) {
 			return 1; //not all fields filled out
 		}
+		/*
+		 * 	User findUser = User.authenticate(request.getParameter("username"), request.getParameter("password"));
+			if (findUser == null) {
+				return 0; //Provided credentials invalid
+			}
+			else if (findUser.getRole() == "client") {
+				return 2; //Client Logged in
+			}
+			else if (findUser.getRole() == "admin") {
+				return 3; //Admin Logged in
+			}
+		 * 
+		 */
 		if (username.equals("client@isp.net") && password.equals("P@ssword0")) {
 			return 2; //client logged in
 		}

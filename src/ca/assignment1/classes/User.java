@@ -6,6 +6,18 @@ import java.util.Date;
 
 public class User {
 	
+	private User() {}
+	
+	public User(String username, String password, String role) {
+		this.firstname = "Ben";
+		this.lastname = "Franklin";
+		this.email = username;
+		this.address = "123 Street";
+		this.salt = Password.newRandomSalt();
+		this.passwordhash = Password.getHash(password, salt);
+		this.role = role;
+	}
+	
 	private User(String email, String firstname, String lastname, Date created, String passwordhash, String salt,
 			String role) {
 		super();
