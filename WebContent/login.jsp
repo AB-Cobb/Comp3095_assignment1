@@ -81,7 +81,7 @@
             </div>
             <a href="#"><p>Forgot your password?</p></a>
         </form>
-        <form action="Register" method="get">
+        <form action="RegisterServlet" method="get">
         	<button class="btn btn-dark" type="submit" name="register">Register</button>
         </form>
     </div>
