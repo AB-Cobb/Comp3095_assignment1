@@ -39,7 +39,7 @@
 	      </li>
 	    </ul>
 	    <span class="navbar-text">
-	      Hello USER
+	      Hello ${User.getFirstName()}
 	    </span>
 	      <form class="form-inline">
 		  	<button class="btn btn-outline-success" type="submit">Logout</button>
