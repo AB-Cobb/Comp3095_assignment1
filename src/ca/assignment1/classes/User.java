@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class User {
 	
-	private User(String email, String firstname, String lastname, Date created, String passwordhash, String salt,
+	public User(String email, String firstname, String lastname, Date created, String passwordhash, String salt,
 			String role) {
 		super();
 		this.email = email;
@@ -40,8 +40,18 @@ public class User {
 	private String role;
 	
 	
-	
-	public static User authenticate(String email, String Password) {
+	public static String authenticate(String username, String password) {
+		String role ="denied";
+		ResultSet credientials = DB.getLoginCredentials(username);
+		if (credientials != null) {
+			if ( Password.getHash(password, credientials.getString("salt")).equals(credientials.getString("passwordhash")) ) {
+				return credientials.getString("Role");
+			}
+		}
+		
+		return role;
+	}
+	public static User getUserByLogin(String email) {
 		ResultSet user_data = DB.getUserByEmail(email);
 		if (user_data !=null) {
 			try {
@@ -88,18 +98,6 @@ public class User {
 
 	public Date getCreated() {
 		return created;
-	}
-
-	public void setPasswordhash(String passwordhash) {
-		this.passwordhash = passwordhash;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	public String getAddress() {

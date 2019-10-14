@@ -8,35 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import classes.LoginAuthenticate;
-import beans.User;
+import ca.assignment1.classes.LoginAuthenticate;
+import ca.assignment1.classes.User;
 
-/**
- * Servlet implementation class LoginServlet
- */
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+ 
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int resultCode = LoginAuthenticate.Authenticate(request, response);
 		if (resultCode == 0) {
@@ -51,13 +39,8 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 		else {
-			User user;
-			if (resultCode == 2) {
-				user = new User(request.getParameter("username"), request.getParameter("password"), "client");
-			}
-			else {
-				user = new User(request.getParameter("username"), request.getParameter("password"), "admin");
-			}
+			User user =User.getUserByLogin(request.getParameter("username"));
+
 			HttpSession session = request.getSession();
 			session.setAttribute("User", user);
 			request.setAttribute("User", user);

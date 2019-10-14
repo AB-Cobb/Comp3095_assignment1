@@ -34,6 +34,18 @@ public class DB {
 			return null;
 		}
 	 }
+	 public static ResultSet getLoginCredentials(String email) {
+		try {
+			PreparedStatement selectUser;
+			selectUser = ((java.sql.Connection) connect).prepareStatement("SELECT password, salt, role FROM users WHERE email LIKE ?");
+			selectUser.setString(0, email);
+			selectUser.executeUpdate();
+			ResultSet results = selectUser.executeQuery();
+			return results;
+		} catch (SQLException e) {
+			return null;
+		}
+	 }
 	 public static boolean updateUser (User user) {
 		 try {
 			PreparedStatement updateUsers = ((java.sql.Connection) connect).prepareStatement(
