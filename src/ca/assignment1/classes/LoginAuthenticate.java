@@ -1,15 +1,12 @@
 package ca.assignment1.classes;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
 
 public abstract class LoginAuthenticate {
-	public static int Authenticate(HttpServletRequest request, HttpServletResponse response) {
+	public static int Authenticate(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String username = request.getParameter("username").toString();
 		String password = request.getParameter("password").toString();
 		if (username.equals("") || username == null || password.equals("") || password == null) {

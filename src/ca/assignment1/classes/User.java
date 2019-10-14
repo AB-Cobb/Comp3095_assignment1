@@ -26,6 +26,7 @@ public class User {
 		this.salt = Password.newRandomSalt();
 		this.passwordhash = Password.getHash(password, salt);
 		this.role = "client";
+		this.created = new java.util.Date(System.currentTimeMillis());
 	}
 
 
@@ -40,31 +41,31 @@ public class User {
 	private String role;
 	
 	
-	public static String authenticate(String username, String password) {
+	public static String authenticate(String username, String password) throws Exception {
 		String role ="denied";
 		ResultSet credientials = DB.getLoginCredentials(username);
 		if (credientials != null) {
-			if ( Password.getHash(password, credientials.getString("salt")).equals(credientials.getString("passwordhash")) ) {
-				return credientials.getString("Role");
+			try {
+			if ( Password.getHash(password, credientials.getString("salt")).equals(credientials.getString("passwordhash" ))) {
+					return credientials.getString("Role");
+				} 
+			} catch (SQLException e) {
+				throw e;
 			}
 		}
 		
 		return role;
 	}
-	public static User getUserByLogin(String email) {
+	public static User getUserByLogin(String email) throws Exception {
 		ResultSet user_data = DB.getUserByEmail(email);
 		if (user_data !=null) {
-			try {
 				return new User(user_data.getString("email"), user_data.getString("firstname"), user_data.getString("lastname"),
 						user_data.getDate("created"), user_data.getString("passwordhash"), user_data.getString("salt"), user_data.getString("role"));
-			} catch (SQLException e) {
-				return null;
-			}
 		}
 		return null;
 	}
 	
-	public void save() {
+	public void save() throws Exception {
 		DB.updateUser(this);
 	}
 

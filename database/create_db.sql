@@ -1,7 +1,7 @@
 
 CREATE DATABASE IF NOT EXISTS COMP3095;
 USE COMP3095;
-grant all on COMP3095.* to 'app'@'localhost' identified by 'app'; 
+grant all on COMP3095.* to 'app'@'localhost' identified by 'pw123'; 
 
 CREATE TABLE USERS 
 ( 

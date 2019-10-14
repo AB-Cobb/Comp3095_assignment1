@@ -27,6 +27,7 @@ public class Authenticate extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO validate form
+		/*
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		User user = User.authenticate(email,password);
@@ -47,7 +48,7 @@ public class Authenticate extends HttpServlet {
 			}
 			
 		}
-		request.getRequestDispatcher(url).include(request, response);
+		request.getRequestDispatcher(url).include(request, response);*/
 	}
 
 }

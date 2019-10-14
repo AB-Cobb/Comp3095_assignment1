@@ -1,6 +1,8 @@
 package ca.assignment1.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +28,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
 		int resultCode = LoginAuthenticate.Authenticate(request, response);
 		if (resultCode == 0) {
 			request.setAttribute("Message", "Invalid credentials");
@@ -45,6 +48,10 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("User", user);
 			request.setAttribute("User", user);
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);;
+			} 
+		} catch (Exception e){
+			PrintWriter out = response.getWriter();
+			out.print(e.getMessage());
 		}
 	}
 
