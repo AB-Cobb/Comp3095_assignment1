@@ -2,7 +2,7 @@ package ca.assignment1.classes;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 public class User {
 	
@@ -26,7 +26,7 @@ public class User {
 		this.salt = Password.newRandomSalt();
 		this.passwordhash = Password.getHash(password, salt);
 		this.role = "client";
-		this.created = new java.util.Date(System.currentTimeMillis());
+		this.created = new java.sql.Date(System.currentTimeMillis());
 	}
 
 
@@ -42,31 +42,22 @@ public class User {
 	
 	
 	public static String authenticate(String username, String password) throws Exception {
-		String role ="denied";
-		ResultSet credientials = DB.getLoginCredentials(username);
+		String [] credientials = DB.getLoginCredentials(username);
 		if (credientials != null) {
-			try {
-			if ( Password.getHash(password, credientials.getString("salt")).equals(credientials.getString("passwordhash" ))) {
-					return credientials.getString("Role");
+			if (credientials[2] == "denied")
+				return "denied";
+			if ( Password.getHash(password, credientials[1]).equals(credientials[0])) {
+					return credientials[2];
 				} 
-			} catch (SQLException e) {
-				throw e;
-			}
-		}
-		
-		return role;
+		}	
+		return "denied";
 	}
 	public static User getUserByLogin(String email) throws Exception {
-		ResultSet user_data = DB.getUserByEmail(email);
-		if (user_data !=null) {
-				return new User(user_data.getString("email"), user_data.getString("firstname"), user_data.getString("lastname"),
-						user_data.getDate("created"), user_data.getString("passwordhash"), user_data.getString("salt"), user_data.getString("role"));
-		}
-		return null;
+		return DB.getUserByEmail(email);
 	}
 	
-	public void save() throws Exception {
-		DB.updateUser(this);
+	public boolean save() throws Exception {
+		return DB.updateUser(this);
 	}
 
 

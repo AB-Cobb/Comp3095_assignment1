@@ -23,42 +23,66 @@ public class DB {
 	      throw e;
 	    } 
 	  }
-	 public static ResultSet getUserByEmail(String email) throws Exception {
-		 
+	 public static User getUserByEmail(String email) throws Exception {
+		 ResultSet rs = null;
+		 Connection connect = null;
 		 try {
-			Connection connect = connectDataBase();
-			
+			connect = connectDataBase();	
 			PreparedStatement selectUser = connect.prepareStatement("SELECT * FROM users WHERE email LIKE ?");
 			selectUser.setString(1, email);
-			ResultSet results = selectUser.executeQuery();
-			selectUser.close();
-			connect.close();
-			return results;
+			rs = selectUser.executeQuery();
+			User user = null;
+			if ((rs.first())) {
+				user =  new User(rs.getString("email"), rs.getString("firstname"), rs.getString("lastname"),
+					rs.getDate("created"), rs.getString("passwordhash"), rs.getString("salt"), rs.getString("role"));
+			} 
+			return user;
 			
 		} catch (Exception e) {
 			throw e;
+		} finally {
+			rs.close();
+			connect.close();
 		}
 	 }
 	 
-	 public static ResultSet getLoginCredentials(String email)throws Exception {
-		try {
-			Connection connect = connectDataBase();
+	 public static String[] getLoginCredentials(String email)throws Exception {
+		 ResultSet rs = null;
+		 Connection connect = null;
+		 try {
+			String results[] = new String[3];
+			connect = connectDataBase();
 			PreparedStatement selectUser;
-			selectUser = connect.prepareStatement("SELECT password, salt, role FROM users WHERE email LIKE ?");
+			selectUser = connect.prepareStatement("SELECT passwordhash, salt, role FROM users WHERE email LIKE ?");
 			selectUser.setString(1, email);
-			ResultSet results = selectUser.executeQuery();
-			selectUser.close();
+			rs = selectUser.executeQuery();
+			if ((rs.first())) {
+				results[0] = rs.getString("passwordhash");
+				results[1] = rs.getString("salt");
+				results[2] = rs.getString("role");
+			} else {
+				results[0] = "denied";
+				results[1] = "denied";
+				results[2] = "denied";
+			}
+			//selectUser.close();
 			connect.close();
 			return results;
 			}
 			catch (Exception e) {
 				throw e;
+			}finally {
+			rs.close();
+			connect.close();
 		}
 	 }
 	 
-	 public static void updateUser (User user) throws Exception{
+	 public static boolean updateUser (User user) throws Exception{
+		 Connection connect = null;
+		 if (getLoginCredentials(user.getEmail())[0] != "denied")
+			 return false; //email already exist 
 		 try {
-			Connection connect = connectDataBase();
+			connect = connectDataBase();
 			PreparedStatement updateUsers =  connect.prepareStatement(
 					"INSERT users (firstname,lastname,email,address,role,created,passwordhash,salt) VALUES (?,?,?,?,?,?,?,?)");
 			updateUsers.setString(1, user.getFirstname());
@@ -70,11 +94,13 @@ public class DB {
 			updateUsers.setString(7, user.getPasswordhash());
 			updateUsers.setString(8, user.getSalt());
 			updateUsers.executeUpdate();
-			updateUsers.close();	
+			//updateUsers.close();	
 			connect.close();
-
+			return true;
 		 } catch (Exception e) {
 			 throw e;
+		} finally {
+			connect.close();
 		}
 		 
 	 }

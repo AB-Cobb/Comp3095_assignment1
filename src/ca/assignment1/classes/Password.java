@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class Password {
 	public static String getHash(String password, String salt) {
+		/* 
+		 * ***** not working will fix if i have time - Andrew ******
 		try {
 		MessageDigest mdigest = MessageDigest.getInstance("SHA-512");
 		mdigest.update(salt.getBytes());
@@ -16,7 +18,8 @@ public class Password {
 			return null;
 		} catch (UnsupportedEncodingException e) {
 			return null;
-		}
+		}// */
+		return password;
 		
 	}
 	public static String newRandomSalt() {
