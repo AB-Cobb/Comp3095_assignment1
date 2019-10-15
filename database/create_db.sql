@@ -16,5 +16,5 @@ CREATE TABLE USERS
     salt varchar(128)
 );
 
-/*INSERT INTO `USERS` (`firstname`, `lastname`, `email`, `role`, `password`) VALUES
-(NULL, NULL, `admin@domain.ca`, NULL, `P@ssword1`);
+INSERT INTO `USERS` (`firstname`, `lastname`, `email`, `role`, `password`) VALUES
+('Blog', 'Blogson', `admin@domain.ca`, '123 Street', `P@ssword1`, 'xxxxx');

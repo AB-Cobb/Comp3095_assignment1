@@ -62,6 +62,8 @@
             box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
         }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    
 </head>
 <body>
 <div class="text-center">
@@ -72,14 +74,15 @@
             <input type="email" id="username" class="form-control" placeholder="Username" name="username" autofocus value="${ Username }">
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password">
-            <label for="check">
+            <!--  <label for="check">
                 <input type="checkbox" id="check"/>
                 I am not a robot
-            </label>
+            </label> -->
+            <div class="g-recaptcha"
+			data-sitekey="6LdMAgMTAAAAAGYY5PEQeW7b3L3tqACmUcU6alQf"></div>
             <div>
                 <button class="btn btn-dark" type="submit" name="login">Log In</button>
             </div>
-            <a href="#"><p>Forgot your password?</p></a>
         </form>
         <form action="register.jsp" method="get">
         	<button class="btn btn-dark" type="submit" name="register">Register</button>

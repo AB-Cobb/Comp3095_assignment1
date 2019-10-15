@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import ca.assignment1.classes.User;
+import ca.assignment1.classes.Email;
 
 import ca.assignment1.classes.RegisterAuthenticate;
 
@@ -25,10 +26,7 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO validate form
-		//User user = new User(email, firstname, lastname, password, address);
-		//user.save();
-		//TODO routing
+
 		
 		String firstName = request.getParameter("fName");
 		String lastName = request.getParameter("lName");
@@ -51,6 +49,7 @@ public class RegisterServlet extends HttpServlet {
 			user = new User(email, firstName, lastName, password, address);
 			try {
 			if (user.save()) {
+				ca.assignment1.classes.Email.send_email(user);
 				HttpSession session = request.getSession();
 				session.setAttribute("User", user);
 				request.setAttribute("User", user);

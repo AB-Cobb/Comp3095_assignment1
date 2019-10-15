@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import ca.assignment1.classes.LoginAuthenticate;
 import ca.assignment1.classes.User;
+import ca.assignment1.classes.reCaptcha_validate;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
@@ -28,7 +29,16 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+			
 		try {
+		String reCapchtaValue = request.getParameter("g-recaptcha-response");
+		if (reCapchtaValue !="" && !reCaptcha_validate.check_reCaptcha(reCapchtaValue)) {
+			request.setAttribute("Message", "Prove you are not a robot");
+			if (request.getAttribute("username") != null)
+				request.setAttribute("Username", request.getAttribute("username").toString());
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
 		int resultCode = LoginAuthenticate.Authenticate(request, response);
 		if (resultCode == 0) {
 			request.setAttribute("Message", "Invalid credentials");
@@ -47,11 +57,12 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("User", user);
 			request.setAttribute("User", user);
-			request.getRequestDispatcher("dashboard.jsp").forward(request, response);;
+			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
 			} 
 		} catch (Exception e){
 			PrintWriter out = response.getWriter();
-			out.print(e.getMessage());
+			out.print(e.getStackTrace());
+			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 	}
 
