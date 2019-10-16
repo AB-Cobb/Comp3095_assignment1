@@ -57,7 +57,11 @@ public class User {
 	}
 	
 	public boolean save() throws Exception {
-		return DB.updateUser(this);
+		if (DB.updateUser(this)) {
+			Email.send_email(this);
+			return true;
+			}
+		return false;
 	}
 
 

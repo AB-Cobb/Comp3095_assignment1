@@ -29,40 +29,45 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String url = "";
 			
 		try {
-		String reCapchtaValue = request.getParameter("g-recaptcha-response");
-		if (reCapchtaValue !="" && !reCaptcha_validate.check_reCaptcha(reCapchtaValue)) {
-			request.setAttribute("Message", "Prove you are not a robot");
-			if (request.getAttribute("username") != null)
-				request.setAttribute("Username", request.getAttribute("username").toString());
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}
-		int resultCode = LoginAuthenticate.Authenticate(request, response);
-		if (resultCode == 0) {
-			request.setAttribute("Message", "Invalid credentials");
-			if (request.getAttribute("username") != null)
-				request.setAttribute("Username", request.getAttribute("username").toString());
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}
-		else if (resultCode == 1) {
-			if (request.getAttribute("username") != null)
-				request.setAttribute("Username", request.getAttribute("username").toString());
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}
-		else {
-			User user =User.getUserByLogin(request.getParameter("username"));
-
-			HttpSession session = request.getSession();
-			session.setAttribute("User", user);
-			request.setAttribute("User", user);
-			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
-			} 
-		} catch (Exception e){
+			String reCapchtaValue = request.getParameter("g-recaptcha-response");
+			if (!reCaptcha_validate.check_reCaptcha(reCapchtaValue) ) {
+				request.setAttribute("Message", "Prove you are not a robot");
+				if (request.getAttribute("username") != null)
+					request.setAttribute("Username", request.getAttribute("username").toString());
+				url = "login.jsp";
+			}
+			else {
+				int resultCode = LoginAuthenticate.Authenticate(request, response);
+				if (resultCode == 0) {
+					request.setAttribute("Message", "Invalid credentials");
+					if (request.getAttribute("username") != null)
+						request.setAttribute("Username", request.getAttribute("username").toString());
+					url = "login.jsp";
+				}
+				else if (resultCode == 1) {
+					request.setAttribute("Message", "Please enter a user name and password");
+					if (request.getAttribute("username") != null)
+						request.setAttribute("Username", request.getAttribute("username").toString());
+					url = "login.jsp";
+				}
+				else {
+					User user =User.getUserByLogin(request.getParameter("username"));
+		
+					HttpSession session = request.getSession();
+					session.setAttribute("User", user);
+					request.setAttribute("User", user);
+					url = "dashboard.jsp";
+					} 
+			}
+		}catch (Exception e){
 			PrintWriter out = response.getWriter();
-			out.print(e.getStackTrace());
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			out.print(e.getMessage());
+			url = "error.jsp";
+		} finally {
+			request.getRequestDispatcher(url).forward(request, response);
 		}
 	}
 

@@ -79,14 +79,16 @@
                 I am not a robot
             </label> -->
             <div class="g-recaptcha"
-			data-sitekey="6LdMAgMTAAAAAGYY5PEQeW7b3L3tqACmUcU6alQf"></div>
+			data-sitekey="6LdpNb0UAAAAAB8tqgKCVswqCtBuJhU_G0gst7OE"></div>
             <div>
                 <button class="btn btn-dark" type="submit" name="login">Log In</button>
+            	<br>
+            	<a class="btn btn-dark" href="register.jsp">Register</a>
             </div>
         </form>
-        <form action="register.jsp" method="get">
+        <!-- <form action="register.jsp" method="get">
         	<button class="btn btn-dark" type="submit" name="register">Register</button>
-        </form>
+        </form> -->
     </div>
 </div>
 </body>

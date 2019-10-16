@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import ca.assignment1.classes.User;
-import ca.assignment1.classes.Email;
-
 import ca.assignment1.classes.RegisterAuthenticate;
 
 @WebServlet("/RegisterServlet")
@@ -48,20 +46,21 @@ public class RegisterServlet extends HttpServlet {
 		if (status.equals("valid")) {
 			user = new User(email, firstName, lastName, password, address);
 			try {
-			if (user.save()) {
-				ca.assignment1.classes.Email.send_email(user);
-				HttpSession session = request.getSession();
-				session.setAttribute("User", user);
-				request.setAttribute("User", user);
-				request.getRequestDispatcher("registration_sucsess.jsp").forward(request, response);
-			}
-			} catch (Exception e){
+				if (user.save()) {
+					HttpSession session = request.getSession();
+					session.setAttribute("User", user);
+					request.setAttribute("email", user.getEmail());
+					request.getRequestDispatcher("registration_sucsess.jsp").forward(request, response);
+				} else {
+					request.setAttribute("error", "Email already in use");
+					request.getRequestDispatcher("register.jsp").forward(request, response);
+				}
+			} catch (Exception e) {
 				PrintWriter out = response.getWriter();
 				e.printStackTrace(out);
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
-			request.setAttribute("error", "Email already in use");
-			request.getRequestDispatcher("register.jsp").forward(request, response);
+			
 		}
 		else {
 			request.setAttribute("error", status);
