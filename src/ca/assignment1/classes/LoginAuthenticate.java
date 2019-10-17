@@ -3,19 +3,22 @@ package ca.assignment1.classes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
 public abstract class LoginAuthenticate {
-	public static int Authenticate(HttpServletRequest request, HttpServletResponse response) {
+	public static int Authenticate(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String username = request.getParameter("username").toString();
 		String password = request.getParameter("password").toString();
 		if (username.equals("") || username == null || password.equals("") || password == null) {
 			return 1; //not all fields filled out
 		}
-		if (username.equals("client@isp.net") && password.equals("P@ssword0")) {
+		if (User.authenticate(username, password).equals("client")) {
 			return 2; //client logged in
 		}
-		else if (username.equals("admin@isp.net") && password.equals("P@ssword1")) {
+		else if (User.authenticate(username, password).equals("admin")) {
 			return 3; //admin logged in
 		}
 		return 0; //Provided credentials are invalid
 	}
+
 }

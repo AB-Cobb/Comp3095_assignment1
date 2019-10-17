@@ -39,9 +39,9 @@
 	      </li>
 	    </ul>
 	    <span class="navbar-text">
-	      Hello ${User.getFirstName()}
+	      Hello ${User.getFirstname()}
 	    </span>
-	      <form class="form-inline">
+	      <form class="form-inline" action="Logout" method="get">
 		  	<button class="btn btn-outline-success" type="submit">Logout</button>
   		  </form>
 	  </div>

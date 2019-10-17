@@ -1,7 +1,7 @@
 
 CREATE DATABASE IF NOT EXISTS COMP3095;
 USE COMP3095;
-grant all on COMP3095.* to 'app'@'localhost' identified by 'app'; 
+grant all on COMP3095.* to 'app'@'localhost' identified by 'pw123'; 
 
 CREATE TABLE USERS 
 ( 
@@ -16,5 +16,5 @@ CREATE TABLE USERS
     salt varchar(128)
 );
 
-/*INSERT INTO `USERS` (`firstname`, `lastname`, `email`, `role`, `password`) VALUES
-(NULL, NULL, `admin@domain.ca`, NULL, `P@ssword1`);
+INSERT INTO `USERS` (`firstname`, `lastname`, `email`, `role`, `password`) VALUES
+('Blog', 'Blogson', `admin@domain.ca`, '123 Street', `P@ssword1`, 'xxxxx');

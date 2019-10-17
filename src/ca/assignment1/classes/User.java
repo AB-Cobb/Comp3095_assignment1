@@ -2,11 +2,11 @@ package ca.assignment1.classes;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 public class User {
 	
-	private User(String email, String firstname, String lastname, Date created, String passwordhash, String salt,
+	public User(String email, String firstname, String lastname, Date created, String passwordhash, String salt,
 			String role) {
 		super();
 		this.email = email;
@@ -26,6 +26,7 @@ public class User {
 		this.salt = Password.newRandomSalt();
 		this.passwordhash = Password.getHash(password, salt);
 		this.role = "client";
+		this.created = new java.sql.Date(System.currentTimeMillis());
 	}
 
 
@@ -40,22 +41,27 @@ public class User {
 	private String role;
 	
 	
-	
-	public static User authenticate(String email, String Password) {
-		ResultSet user_data = DB.getUserByEmail(email);
-		if (user_data !=null) {
-			try {
-				return new User(user_data.getString("email"), user_data.getString("firstname"), user_data.getString("lastname"),
-						user_data.getDate("created"), user_data.getString("passwordhash"), user_data.getString("salt"), user_data.getString("role"));
-			} catch (SQLException e) {
-				return null;
-			}
-		}
-		return null;
+	public static String authenticate(String username, String password) throws Exception {
+		String [] credientials = DB.getLoginCredentials(username);
+		if (credientials != null) {
+			if (credientials[2] == "denied")
+				return "denied";
+			if ( Password.getHash(password, credientials[1]).equals(credientials[0])) {
+					return credientials[2];
+				} 
+		}	
+		return "denied";
+	}
+	public static User getUserByLogin(String email) throws Exception {
+		return DB.getUserByEmail(email);
 	}
 	
-	public void save() {
-		DB.updateUser(this);
+	public boolean save() throws Exception {
+		if (DB.updateUser(this)) {
+			Email.send_email(this);
+			return true;
+			}
+		return false;
 	}
 
 
@@ -88,18 +94,6 @@ public class User {
 
 	public Date getCreated() {
 		return created;
-	}
-
-	public void setPasswordhash(String passwordhash) {
-		this.passwordhash = passwordhash;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	public String getAddress() {

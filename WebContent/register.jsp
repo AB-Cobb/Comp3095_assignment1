@@ -57,25 +57,26 @@
 </head>
 <body>
 	<div class="">
-		<form>
+		<form action="RegisterServlet" method="post">
 		  <div class="text-center"><h2>Register</h2></div>
+		  <h3 class="text-danger">${ error }</h3>
 		  <div class="form-row">
 		    <div class="form-group col-md-6">
 		      <label for="fName">First Name*</label>
-		      <input type="text" class="form-control" id="fName" name="fName" placeholder="First Name">
+		      <input type="text" class="form-control" id="fName" name="fName" placeholder="First Name" value="${ firstName }">
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label for="lName">Last Name*</label>
-		      <input type="password" class="form-control" id="lName" name="lName" placeholder="Last Name">
+		      <input type="text" class="form-control" id="lName" name="lName" placeholder="Last Name" value="${ lastName }">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="address">Address*</label>
-		    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+		    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address" value="${ address }">
 		  </div>
 		  <div class="form-group">
 		    <label for="email">Email*</label>
-		    <input type="email" class="form-control" id="email" name="email" name="email" placeholder="Email">
+		    <input type="email" class="form-control" id="email" name="email" name="email" placeholder="Email" value="${ email }">
 		  </div>	
 		  <div class="form-row">	  
 		  <div class="form-group col-md-6">
@@ -89,14 +90,16 @@
 		  </div>
 		  <div class="form-group">
 		    <div class="form-check">
-		      <input class="form-check-input" type="checkbox" id="gridCheck">
+		      <input class="form-check-input" type="checkbox" id="gridCheck" name="termsCheck" value="true">
 		      <label class="form-check-label" for="gridCheck">
 		        I agree to the terms of service
 		      </label>
 		    </div>
 		  </div>
 		  <button type="submit" class="btn btn-primary">Sign in</button>
-  		  <button type="submit" class="btn btn-danger">Cancel</button>
+		</form>
+		<form action="Logout" method="get">
+			<button type="submit" class="btn btn-danger">Cancel</button>
 		</form>
 	</div>
 </body>
