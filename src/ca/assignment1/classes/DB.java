@@ -1,3 +1,18 @@
+/*
+*********************************************************************************
+* Project:	Comp3095_assignment1
+* Assignment: Assignment One
+* Author(s):
+*      Andrew Cobb:		101142044
+*      Giuseppe Ragusa; 101109502
+*      Arsalan Farooqui:101144384
+*       
+*      Date: 17/10/2019
+*      Description:           Connects to Database to store and get  user data
+ ******************************************************************************** */
+
+
+
 package ca.assignment1.classes;
 
 import java.sql.DriverManager;

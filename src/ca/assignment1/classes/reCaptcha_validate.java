@@ -1,3 +1,16 @@
+/*
+*********************************************************************************
+* Project:	Comp3095_assignment1
+* Assignment: Assignment One
+* Author(s):
+*      Andrew Cobb:		101142044
+*      Giuseppe Ragusa; 101109502
+*      Arsalan Farooqui:101144384
+*       
+*      Date: 17/10/2019
+*      Description:           Code to connect to google reCaptcha servers
+ ******************************************************************************** */
+
 package ca.assignment1.classes;
 
 import java.io.BufferedReader;
