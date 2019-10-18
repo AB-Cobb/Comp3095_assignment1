@@ -54,9 +54,9 @@
             width: 100%;
         }
         form{
-            border: ghostwhite 3px solid;
+            border: #f7f9fb 3px solid;
             padding: 3% 7%;
-            background: ghostwhite;
+            background: #f7f9fb;
             -webkit-box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
             -moz-box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
             box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
@@ -80,9 +80,8 @@
             </label> -->
             <div class="g-recaptcha"
 			data-sitekey="6LdpNb0UAAAAAB8tqgKCVswqCtBuJhU_G0gst7OE"></div>
-            <div>
+            <div class="mt-2">
                 <button class="btn btn-dark" type="submit" name="login">Log In</button>
-            	<br>
             	<a class="btn btn-dark" href="register.jsp">Register</a>
             </div>
         </form>

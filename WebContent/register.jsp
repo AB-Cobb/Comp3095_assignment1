@@ -38,17 +38,13 @@
 	            font-family: 'Montserrat', sans-serif;
 	        }
     .vertical-center {
-            min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
+	    width: 50%;
+	    margin: 0 auto;
         }       
     form {
-            border: ghostwhite 3px solid;
+            border: #f7f9fb 3px solid;
             padding: 3% 7%;
-            background: ghostwhite;
+            background: #f7f9fb;
             -webkit-box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
             -moz-box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
             box-shadow: 0px 0px 3px 1px rgba(161,150,161,1);
@@ -56,7 +52,7 @@
 </style>
 </head>
 <body>
-	<div class="">
+	<div class="vertical-center">
 		<form action="RegisterServlet" method="post">
 		  <div class="text-center"><h2>Register</h2></div>
 		  <h3 class="text-danger">${ error }</h3>
@@ -96,10 +92,10 @@
 		      </label>
 		    </div>
 		  </div>
-		  <button type="submit" class="btn btn-primary">Sign in</button>
-		</form>
-		<form action="Logout" method="get">
-			<button type="submit" class="btn btn-danger">Cancel</button>
+		  <div class="text-center">
+	  		  <button type="submit" class="btn btn-primary">Sign in</button>
+	  		  <a class="btn btn-danger" href="./login.jsp">Cancel</a>
+		  </div>
 		</form>
 	</div>
 </body>
